@@ -88,7 +88,7 @@ public class Triangle : Shape
             if (isRightTriangle(triangle))
                 return AngleTypes.Right;
 
-            //P.S Even if this is not implemented, this code is very flexible and can be easily extended
+            //P.S This code is very flexible and can be easily extended to full functionality
             throw new NotImplementedException(); 
         }
 
