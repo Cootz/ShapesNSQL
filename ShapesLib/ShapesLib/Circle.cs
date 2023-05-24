@@ -20,7 +20,5 @@ public class Circle : Shape
 
     public Circle(double radius) => Radius = radius;
 
-    public Circle() => Radius = 0;
-
     public override double GetArea() => Math.PI * Math.Pow(Radius, 2);
 }

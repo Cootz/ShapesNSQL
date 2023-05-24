@@ -4,7 +4,7 @@ namespace ShapesLib;
 
 public class Triangle : Shape
 {
-    private double a, b, c;
+    private double a,b,c;
 
     public double A
     {
@@ -49,5 +49,23 @@ public class Triangle : Shape
         C = c;
     }
 
-    public override double GetArea() => Math.Sqrt((a + b + c) * (-a + b + c) * (a - b + c) * (a + b - c)) / 4;
+    public override double GetArea()
+    {
+        if (!CalculationHelper.DoesTriangleExist(A, B, C))
+            throw new Exception("Triangle does not exist");
+
+        return Math.Sqrt((A + B + C) * (-A + B + C) * (A - B + C) * (A + B - C)) / 4;
+    }
+
+    private static class CalculationHelper
+    {
+        public static bool DoesTriangleExist(double a, double b, double c)
+        {
+            double[] sides = { a, b, c };
+
+            double twoLargestSidesSum = sides.OrderDescending().Take(2).Sum();
+
+            return twoLargestSidesSum > sides.Min();
+        }
+    }
 }
