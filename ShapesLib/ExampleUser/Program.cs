@@ -20,7 +20,7 @@ foreach (var shape in pageShapes)
 Console.WriteLine();
 Console.WriteLine("Searching for right triangle");
 
-var triangles = from shape in pageShapes where shape is Triangle triangle select (Triangle)shape;
+var triangles = from shape in pageShapes where shape is Triangle select (Triangle)shape;
 
 int rightTrianglesCount = triangles.Count(t =>
 {
