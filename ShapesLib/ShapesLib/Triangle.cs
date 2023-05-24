@@ -1,4 +1,5 @@
 ﻿using ShapesLib.Exceptions;
+// ReSharper disable CompareOfFloatsByEqualityOperator
 
 namespace ShapesLib;
 
@@ -42,6 +43,11 @@ public class Triangle : Shape
         }
     }
 
+    public AngleTypes AngleType
+    {
+        get => MathHelper.GetAngleType(this);
+    }
+
     public Triangle(double a, double b, double c)
     {
         A = a;
@@ -51,21 +57,72 @@ public class Triangle : Shape
 
     public override double GetArea()
     {
-        if (!CalculationHelper.DoesTriangleExist(A, B, C))
+        if (!MathHelper.DoesTriangleExist(this))
             throw new Exception("Triangle does not exist");
 
         return Math.Sqrt((A + B + C) * (-A + B + C) * (A - B + C) * (A + B - C)) / 4;
     }
 
-    private static class CalculationHelper
+    /// <summary>
+    /// Help with math of <see cref="Triangle"/>
+    /// </summary>
+    private static class MathHelper
     {
-        public static bool DoesTriangleExist(double a, double b, double c)
+        public static bool DoesTriangleExist(Triangle triangle)
         {
-            double[] sides = { a, b, c };
+            double a = triangle.A;
+            double b = triangle.B;
+            double c = triangle.C;
 
-            double twoLargestSidesSum = sides.OrderDescending().Take(2).Sum();
+            bool result = true;
 
-            return twoLargestSidesSum > sides.Min();
+            result &= a + b > c;
+            result &= a + c > b;
+            result &= b + c > a;
+
+            return result;
         }
+
+        public static AngleTypes GetAngleType(Triangle triangle)
+        {
+            if (isRightTriangle(triangle))
+                return AngleTypes.Right;
+
+            //P.S Does not implemented, yet it very flexible and can be easily extended
+            throw new NotImplementedException(); 
+        }
+
+        private static bool isRightTriangle(Triangle triangle)
+        {
+            double ab = Math.Pow(triangle.A * triangle.B, 2);
+            double ac = Math.Pow(triangle.A * triangle.C, 2);
+            double bc = Math.Pow(triangle.B * triangle.C, 2);
+
+            bool result = false;
+
+            result |= ab + bc == ac;
+            result |= ab + ac == bc;
+            result |= bc + ac == ab;
+
+            return result;
+        }
+    }
+
+    public enum AngleTypes
+    {
+        /// <summary>
+        /// Have three angles &lt; 90
+        /// </summary>
+        Acute,
+
+        /// <summary>
+        /// Have one angle = 90
+        /// </summary>
+        Right,
+        
+        /// <summary>
+        /// Have one angle > 90
+        /// </summary>
+        Obtuse
     }
 }
