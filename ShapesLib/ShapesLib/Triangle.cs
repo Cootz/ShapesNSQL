@@ -88,21 +88,21 @@ public class Triangle : Shape
             if (isRightTriangle(triangle))
                 return AngleTypes.Right;
 
-            //P.S Does not implemented, yet it very flexible and can be easily extended
+            //P.S Even if this is not implemented, this code is very flexible and can be easily extended
             throw new NotImplementedException(); 
         }
 
         private static bool isRightTriangle(Triangle triangle)
         {
-            double ab = Math.Pow(triangle.A * triangle.B, 2);
-            double ac = Math.Pow(triangle.A * triangle.C, 2);
-            double bc = Math.Pow(triangle.B * triangle.C, 2);
+            double asq = Math.Pow(triangle.A, 2);
+            double bsq = Math.Pow(triangle.B, 2);
+            double csq = Math.Pow(triangle.C, 2);
 
             bool result = false;
 
-            result |= ab + bc == ac;
-            result |= ab + ac == bc;
-            result |= bc + ac == ab;
+            result |= asq + csq == bsq;
+            result |= asq + bsq == csq;
+            result |= csq + bsq == asq;
 
             return result;
         }
