@@ -8,7 +8,7 @@ namespace ShapesLib.Tests
         [Test]
         [TestCase(0, ExpectedResult = 0)]
         [TestCase(1, ExpectedResult = Math.PI)]
-        [TestCase(3.14, ExpectedResult = 30.974d)]
+        [TestCase(3.14, ExpectedResult = 30.974846927333925d)]
         public double GetAreaPositiveTest(double radius) => new Circle(radius).GetArea();
 
         [Test]
